@@ -1,11 +1,11 @@
 import * as types from './types';
-//import * as AuthService from '../../../utils/AuthService';
+import * as AuthService from '../../../utils/AuthService';
 
 const authReducer = (
     state = {
-        isAuthenticated: false,//!AuthService.isTokenExpired(),
+        isAuthenticated: !AuthService.isTokenExpired(),
         isFetching: false,
-        profile: null,//AuthService.getProfile(),
+        profile: AuthService.getProfile(),
         error: null
     },
     action
