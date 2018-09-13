@@ -63,36 +63,45 @@ class HeaderView extends Component {
         </div>
 
         <NavbarToggler onClick={this.onToggleCollapse} />
-        <Collapse isOpen={this.state.collapse} navbar />
+        <Collapse isOpen={this.state.collapse} navbar>
+          <NavbarNav left>
+            <NavItem>
+              <NavLink to="/dashboard">Dashboard</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/stock">Stock</NavLink>
+            </NavItem>
+          </NavbarNav>
 
-        {auth.isAuthenticated ? (
-          <NavbarNav right>
-            <NavItem>
-              <Fa icon="bell" />
-            </NavItem>
-            <NavItem>
-              <Dropdown>
-                <DropdownToggle nav>
-                  <img
-                    src={auth.profile.picture}
-                    height="30px"
-                    className="rounded-circle z-depth-1-half"
-                  />
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem href="#" onClick={this.handleLogoutClick}>
-                    Logout
-                  </DropdownItem>
-                  <DropdownItem href="#!">Something else here</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </NavItem>
-          </NavbarNav>
-        ) : (
-          <NavbarNav right>
-            <Button onClick={this.handleLoginClick}>Login</Button>
-          </NavbarNav>
-        )}
+          {auth.isAuthenticated ? (
+            <NavbarNav right>
+              <NavItem>
+                <Fa icon="bell" />
+              </NavItem>
+              <NavItem>
+                <Dropdown>
+                  <DropdownToggle nav>
+                    <img
+                      src={auth.profile.picture}
+                      height="30px"
+                      className="rounded-circle z-depth-1-half"
+                    />
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem href="#" onClick={this.handleLogoutClick}>
+                      Logout
+                    </DropdownItem>
+                    <DropdownItem href="#!">Something else here</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </NavItem>
+            </NavbarNav>
+          ) : (
+            <NavbarNav right>
+              <Button onClick={this.handleLoginClick}>Login</Button>
+            </NavbarNav>
+          )}
+        </Collapse>
       </Navbar>
     );
   }
