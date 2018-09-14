@@ -7,6 +7,8 @@ import gql from "graphql-tag";
 
 import SalesOverview from "./SalesOverview";
 
+import FarmRegistration from "../FarmRegistration/FarmRegistration";
+
 const dashboardStatistics = gql`
   {
     me {
@@ -32,7 +34,7 @@ const Dashboard = () => (
       }
 
       if (!data.me.farm) {
-        return <div>This is where we would ask you to sign up your farm!</div>;
+        return <FarmRegistration bluff="" />;
       }
 
       return (
