@@ -25,6 +25,7 @@ class AppView extends Component {
         if (error) {
           return loginError(error);
         }
+        AuthService.setAccessToken(authResult.accessToken);
         AuthService.setToken(authResult.idToken); // static method
         AuthService.setProfile(profile); // static method
         loginSuccess(profile);

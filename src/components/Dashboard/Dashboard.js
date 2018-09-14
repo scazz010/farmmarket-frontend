@@ -1,48 +1,70 @@
 import React from "react";
 
-import SummaryCard from "./Card";
 import { Fa, Card, CardBody, CardTitle } from "mdbreact";
 import { Table, TableBody, TableHead } from "mdbreact";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
+import SalesOverview from "./SalesOverview";
+
+const dashboardStatistics = gql`
+  {
+    me {
+      given_name
+      family_name
+      farm {
+        sales {
+          id
+        }
+        totalSales
+        totalCustomers
+        totalRevenue
+      }
+    }
+  }
+`;
 
 const Dashboard = () => (
-  <div style={{ marginTop: "100px", paddingLeft: 50, paddingRight: 50 }}>
-    <div className="card-deck p-2">
-      <SummaryCard
-        icon={<Fa icon="dollar" size="2x" className="red-text" />}
-        description="total"
-        value="234,234"
-      />
-      <SummaryCard
-        icon={<Fa icon="shopping-cart" size="2x" className="teal-text" />}
-        description="Total # of sales"
-        value="32"
-      />
-      <SummaryCard
-        icon={<Fa icon="user" size="2x" className="indigo-text" />}
-        description="Total # of customers"
-        value="12"
-      />
-    </div>
+  <Query query={dashboardStatistics}>
+    {({ loading, error, data }) => {
+      if (loading || error) {
+        return null;
+      }
 
-    <div className="p-2">
-      <Card>
-        <CardBody>
-          <CardTitle>Recent orders</CardTitle>
-          <Table responsiveMd>
-            <TableHead>
-              <tr>
-                <th>Customer</th>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Payment</th>
-              </tr>
-            </TableHead>
-          </Table>
-        </CardBody>
-      </Card>
-    </div>
-  </div>
+      if (!data.me.farm) {
+        return <div>This is where we would ask you to sign up your farm!</div>;
+      }
+
+      return (
+        <div style={{ marginTop: "100px", paddingLeft: 50, paddingRight: 50 }}>
+          <SalesOverview
+            totalRevenue={data.me.farm.totalRevenue}
+            totalCustomers={data.me.farm.totalCustomers}
+            totalSales={data.me.farm.totalSales}
+          />
+
+          <div className="p-2">
+            <Card>
+              <CardBody>
+                <CardTitle>Recent orders</CardTitle>
+                <Table responsiveMd>
+                  <TableHead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Item</th>
+                      <th>Quantity</th>
+                      <th>Status</th>
+                      <th>Payment</th>
+                    </tr>
+                  </TableHead>
+                </Table>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+      );
+    }}
+  </Query>
 );
 
 export default Dashboard;
