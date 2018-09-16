@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Container, Row, Col, Card, CardBody, Button } from "mdbreact";
+import { Fa } from "mdbreact";
 import ValidatableInput from "../Form/ValidatableInput";
 
 const FarmRegistrationForm = props => {
@@ -55,7 +56,7 @@ const FarmRegistrationForm = props => {
                 </div>
                 <div className="text-center py-4 mt-3">
                   <Button color="cyan" type="submit" disabled={isSubmitting}>
-                    Register
+                    Register {isSubmitting && <Fa icon="spinner" spin />}
                   </Button>
                 </div>
               </form>

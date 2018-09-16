@@ -1,9 +1,11 @@
 import { withFormik } from "formik";
 import * as Yup from "yup";
 import { graphql, compose } from "react-apollo";
+import gql from "graphql-tag";
 
 import FarmRegistrationForm from "./FarmRegistrationView";
-import gql from "graphql-tag";
+
+import { ProfileQuery } from "../../Store/Queries";
 
 const mutation = gql`
   mutation RegisterFarm($name: String!, $postCode: String!) {
@@ -30,17 +32,10 @@ export default compose(
     }),
     handleSubmit: (payload, { props, setSubmitting, setErrors }) => {
       const { farmName, postCode } = payload;
-      props.mutate({ variables: { name: farmName, postCode } }).then(
-        response => {
-          console.log(response);
-        },
-        e => {
-          const errors = e.graphQLErrors.map(error => error.message);
-          console.log(errors);
-          setSubmitting(false);
-          setErrors({ email: " ", password: " ", form: errors });
-        }
-      );
+      props.mutate({
+        variables: { name: farmName, postCode },
+        refetchQueries: [{ query: ProfileQuery }]
+      });
     }
   })
 )(FarmRegistrationForm);
