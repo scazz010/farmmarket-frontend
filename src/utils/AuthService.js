@@ -26,7 +26,7 @@ export const login = () => {
 export const loggedIn = () => {
   // Checks if there is a saved token and it's still valid
   const token = getAccessToken();
-  return !!token && !isTokenExpired(token);
+  return !!token && !isTokenExpired();
 };
 
 export const logout = () => {
@@ -59,10 +59,11 @@ export const getToken = () => {
 
 export const setAccessToken = accessToken =>
   window.localStorage.setItem("access_token", accessToken);
+
 export const getAccessToken = () => window.localStorage.getItem("access_token");
 
-export const getTokenExpirationDate = () => {
-  const token = getToken();
+export const getTokenExpirationDate = token => {
+  token = token || getAccessToken();
   const decoded = jwtDecode(token);
   if (!decoded.exp) {
     return null;
@@ -74,9 +75,10 @@ export const getTokenExpirationDate = () => {
 };
 
 export const isTokenExpired = token => {
-  if (!token) return true;
-  const date = getTokenExpirationDate();
+  token = token || getAccessToken();
+  const date = getTokenExpirationDate(token);
   const offsetSeconds = 0;
+
   if (date === null) {
     return false;
   }

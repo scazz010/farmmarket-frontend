@@ -34,7 +34,7 @@ const Dashboard = () => (
       }
 
       if (!data.me.farm) {
-        return <FarmRegistration bluff="" />;
+        return <FarmRegistration />;
       }
 
       return (

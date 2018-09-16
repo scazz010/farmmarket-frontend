@@ -3,7 +3,7 @@ import * as AuthService from "../../../utils/AuthService";
 
 const authReducer = (
   state = {
-    isAuthenticated: !AuthService.isTokenExpired(),
+    isAuthenticated: AuthService.loggedIn(),
     isFetching: false,
     profile: AuthService.getProfile(),
     error: null
