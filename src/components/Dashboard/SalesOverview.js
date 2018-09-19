@@ -7,7 +7,7 @@ const SalesOverview = props => (
     <SummaryCard
       icon={<Fa icon="dollar" size="2x" className="red-text" />}
       description="total"
-      value={props.totalRevenue.amount + " " + props.totalRevenue.currency}
+      value={`${props.totalRevenue.amount} ${props.totalRevenue.currency}`}
     />
     <SummaryCard
       icon={<Fa icon="shopping-cart" size="2x" className="teal-text" />}

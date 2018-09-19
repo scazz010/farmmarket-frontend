@@ -62,6 +62,17 @@ export const setAccessToken = accessToken =>
 
 export const getAccessToken = () => window.localStorage.getItem("access_token");
 
+export const refreshAccessToken = () => {
+  return new Promise((resolve, reject) => {
+    lock.checkSession({}, function(error, result) {
+      if (error || !result) {
+        reject(error);
+      }
+      resolve(result);
+    });
+  });
+};
+
 export const getTokenExpirationDate = token => {
   token = token || getAccessToken();
   const decoded = jwtDecode(token);
