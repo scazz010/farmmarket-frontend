@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
+import StockManager from "../StockManager";
 
 import * as AuthService from "../../utils/AuthService";
 
@@ -45,7 +46,8 @@ class AppView extends Component {
       <div>
         <Header />
         <Switch>
-          <Route path="/" component={Dashboard} />
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/stock" component={StockManager} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
