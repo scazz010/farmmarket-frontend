@@ -6,15 +6,15 @@ import config from "./config";
 // Configure Auth0 lock
 export const lock = new Auth0Lock(config.AUTH0_CLIENT_ID, config.AUTH0_DOMAIN, {
   auth: {
-    redirectUrl: config.REDIRECT_URL,
     audience: "FarmMarket",
+    redirectUrl: config.REDIRECT_URL,
     responseType: "token"
-  },
-  theme: {
-    primaryColor: "#b81b1c"
   },
   languageDictionary: {
     title: "Farm Market"
+  },
+  theme: {
+    primaryColor: "#b81b1c"
   }
 });
 

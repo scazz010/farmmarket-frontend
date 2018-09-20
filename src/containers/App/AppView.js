@@ -46,7 +46,7 @@ class AppView extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path="/" component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/stock" component={StockManager} />
           <Route component={NotFoundPage} />
         </Switch>

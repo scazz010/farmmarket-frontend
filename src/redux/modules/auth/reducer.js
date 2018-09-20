@@ -3,10 +3,10 @@ import * as AuthService from "../../../utils/AuthService";
 
 const authReducer = (
   state = {
+    error: null,
     isAuthenticated: AuthService.loggedIn(),
     isFetching: false,
-    profile: AuthService.getProfile(),
-    error: null
+    profile: AuthService.getProfile()
   },
   action
 ) => {
@@ -14,23 +14,23 @@ const authReducer = (
     case types.LOGIN_REQUEST:
       return {
         ...state,
-        isFetching: true,
-        error: null
+        error: null,
+        isFetching: true
       };
     case types.LOGIN_SUCCESS:
       return {
         ...state,
-        isFetching: false,
         isAuthenticated: true,
+        isFetching: false,
         profile: action.payload.profile
       };
     case types.LOGIN_ERROR:
       return {
         ...state,
-        isFetching: false,
+        error: action.error,
         isAuthenticated: false,
-        profile: {},
-        error: action.error
+        isFetching: false,
+        profile: {}
       };
     case types.LOGOUT_SUCCESS:
       return {

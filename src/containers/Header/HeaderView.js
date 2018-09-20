@@ -17,13 +17,13 @@ import { Fa, Button } from "mdbreact";
 
 class HeaderView extends Component {
   static propTypes = {
+    auth: PropTypes.shape({
+      error: PropTypes.object,
+      isAuthenticated: PropTypes.bool.isRequired,
+      profile: PropTypes.object
+    }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired
-    }).isRequired,
-    auth: PropTypes.shape({
-      isAuthenticated: PropTypes.bool.isRequired,
-      profile: PropTypes.object,
-      error: PropTypes.object
     }).isRequired,
     loginRequest: PropTypes.func.isRequired,
     logoutSuccess: PropTypes.func.isRequired

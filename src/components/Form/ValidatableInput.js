@@ -1,3 +1,4 @@
+/* tslint:disable */
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -8,8 +9,8 @@ class TextField extends React.Component {
 
     this.state = {
       innerValue: props.value || props.default || "",
-      isTouched: false,
-      isPristine: true
+      isPristine: true,
+      isTouched: false
     };
 
     this.onBlur = this.onBlur.bind(this);
@@ -18,13 +19,9 @@ class TextField extends React.Component {
     this.triggerFocus = this.triggerFocus.bind(this);
   }
 
-  componentDidMount() {}
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.value) {
       return { ...prevState, innerValue: nextProps.value };
-    } else {
-      return null;
     }
   }
 
@@ -35,7 +32,9 @@ class TextField extends React.Component {
     }
     // execute callback
     let fn = this.props.onBlur;
-    fn && fn(ev);
+    if (fn) {
+      fn(ev);
+    }
   }
 
   onFocus(ev) {
@@ -45,7 +44,9 @@ class TextField extends React.Component {
     // }
     // execute callback
     let fn = this.props.onFocus;
-    fn && fn(ev);
+    if (fn) {
+      fn(ev);
+    }
   }
 
   onChange(ev) {
@@ -58,8 +59,12 @@ class TextField extends React.Component {
 
     // execute callback
     let fn = this.props.onChange;
-    fn && fn(ev);
-    this.props.getValue && this.props.getValue(ev.target.value);
+    if (fn) {
+      fn(ev);
+    }
+    if (this.props.getValue) {
+      this.props.getValue(ev.target.value);
+    }
   }
   triggerFocus() {
     // hack to enable IE10 pointer-events shim

@@ -19,6 +19,14 @@ const mutation = gql`
 export default compose(
   graphql(mutation),
   withFormik({
+    handleSubmit: (payload, { props, setSubmitting, setErrors }) => {
+      const { farmName, postCode } = payload;
+      props.mutate({
+        refetchQueries: [{ query: ProfileQuery }],
+        variables: { name: farmName, postCode }
+      });
+    },
+
     mapPropsToValues: props => ({
       farmName: "",
       postCode: ""
@@ -29,13 +37,6 @@ export default compose(
       postCode: Yup.string().required(
         "You must enter the postcode for your farm"
       )
-    }),
-    handleSubmit: (payload, { props, setSubmitting, setErrors }) => {
-      const { farmName, postCode } = payload;
-      props.mutate({
-        variables: { name: farmName, postCode },
-        refetchQueries: [{ query: ProfileQuery }]
-      });
-    }
+    })
   })
 )(FarmRegistrationForm);
